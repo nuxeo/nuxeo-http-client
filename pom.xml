@@ -15,17 +15,17 @@
     <dependency>
       <groupId>org.restlet</groupId>
       <artifactId>org.restlet</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>com.noelios.restlet</groupId>
       <artifactId>com.noelios.restlet.ext.httpclient</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>com.noelios.restlet</groupId>
       <artifactId>com.noelios.restlet</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>dom4j</groupId>
