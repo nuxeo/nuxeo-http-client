@@ -3,6 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.nuxeo</groupId>
   <artifactId>nuxeo-http-client</artifactId>
+  <name>Nuxeo HTTP client</name>
+  <description>Nuxeo HTTP client is a simple helper library
+  to encapsulate restlets calls to the Nuxeo platform.
+  This is not a Nuxeo addon to add to a Nuxeo server,
+  this is rather a Nuxeo client.
+  </description>
   <version>5.1.6-SNAPSHOT</version>
 
   <parent>
