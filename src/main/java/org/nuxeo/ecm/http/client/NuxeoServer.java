@@ -19,6 +19,9 @@
 
 package org.nuxeo.ecm.http.client;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +29,14 @@ import org.nuxeo.ecm.http.client.authentication.PortalSSOAuthenticationProvider;
 import org.restlet.Client;
 import org.restlet.data.ChallengeResponse;
 import org.restlet.data.ChallengeScheme;
+import org.restlet.data.Cookie;
 import org.restlet.data.Form;
+import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Parameter;
 import org.restlet.data.Protocol;
 import org.restlet.data.Request;
+import org.restlet.resource.OutputRepresentation;
 import org.restlet.resource.Representation;
 import org.restlet.util.Series;
 
@@ -47,6 +53,8 @@ public class NuxeoServer {
     protected String restPrefix = "restAPI";
 
     protected String davPrefix = "dav";
+
+    protected List<Cookie> cookies;
 
     protected int authType = AUTH_TYPE_NONE;
 
@@ -92,6 +100,76 @@ public class NuxeoServer {
         authType = AUTH_TYPE_SECRET;
         this.userName = userName;
         this.secretToken = secretToken;
+    }
+
+    public void setCookies(List<Cookie> cookies) {
+        this.cookies = cookies;
+    }
+
+    public Representation doRestletPostCall(List<String> pathParams,
+            Map<String, String> queryParams, InputStream istream) {
+        String path = "";
+        StringBuffer pathBuffer = new StringBuffer();
+
+        if (pathParams != null) {
+            for (String p : pathParams) {
+                pathBuffer.append(p);
+                pathBuffer.append('/');
+            }
+            path = pathBuffer.toString();
+        }
+
+        return doRestletPostCall(path, queryParams, istream);
+    }
+
+    public Representation doRestletPostCall(String subPath,
+            Map<String, String> queryParams, InputStream istream) {
+        StringBuffer urlBuffer = new StringBuffer();
+
+        if (subPath.startsWith("/")) {
+            subPath = subPath.substring(1);
+        }
+        if (subPath.endsWith("/")) {
+            subPath = subPath.substring(0, subPath.length() - 1);
+        }
+
+        urlBuffer.append(baseURL);
+        urlBuffer.append('/');
+        urlBuffer.append(restPrefix);
+        urlBuffer.append('/');
+        urlBuffer.append(subPath);
+
+        if (queryParams != null) {
+            urlBuffer.append('?');
+            for (String qpName : queryParams.keySet()) {
+                urlBuffer.append(qpName);
+                urlBuffer.append('=');
+                urlBuffer.append(queryParams.get(qpName).replaceAll(" ", "%20"));
+                urlBuffer.append('&');
+            }
+        }
+
+        String completeURL = urlBuffer.toString();
+
+        Request request = new Request(Method.POST, completeURL);
+
+        setupAuth(request);
+        setupCookies(request);
+        final InputStream in = istream;
+        request.setEntity(new OutputRepresentation(
+                MediaType.MULTIPART_FORM_DATA) {
+            @Override
+            public void write(OutputStream outputStream) throws IOException {
+                byte[] buffer = new byte[1024 * 64];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, read);
+                }
+
+            }
+        });
+
+        return getRestClient().handle(request).getEntity();
     }
 
     public Representation doRestletGetCall(List<String> pathParams,
@@ -141,11 +219,13 @@ public class NuxeoServer {
 
         Request request = new Request(Method.GET, completeURL);
         setupAuth(request);
+        setupCookies(request);
 
         return getRestClient().handle(request).getEntity();
     }
 
     protected void setupAuth(Request request) {
+
         if (authType == AUTH_TYPE_BASIC) {
             ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
             ChallengeResponse authentication = new ChallengeResponse(scheme,
@@ -165,6 +245,16 @@ public class NuxeoServer {
             request.getAttributes().put("org.restlet.http.headers",
                     additionnalHeaders);
         }
+    }
+
+    protected void setupCookies(Request request) {
+        if (cookies != null) {
+            request.getCookies().clear();
+            for (Cookie cookie : cookies) {
+                request.getCookies().add(cookie);
+            }
+        }
+
     }
 
     protected Client getRestClient() {
