@@ -9,12 +9,12 @@
   This is not a Nuxeo addon to add to a Nuxeo server,
   this is rather a Nuxeo client.
   </description>
-  <version>5.1.6-SNAPSHOT</version>
+  <version>5.1.7-SNAPSHOT</version>
 
   <parent>
     <groupId>org.nuxeo</groupId>
     <artifactId>nuxeo-ecm</artifactId>
-    <version>5.1.6-SNAPSHOT</version>
+    <version>5.1.7-SNAPSHOT</version>
   </parent>
 
   <dependencies>
@@ -36,7 +36,6 @@
     <dependency>
       <groupId>dom4j</groupId>
       <artifactId>dom4j</artifactId>
-      <version>1.6.1</version>
     </dependency>
     <dependency>
       <groupId>jaxen</groupId>
