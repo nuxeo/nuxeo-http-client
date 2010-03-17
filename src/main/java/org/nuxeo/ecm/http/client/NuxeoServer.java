@@ -106,8 +106,22 @@ public class NuxeoServer {
         this.cookies = cookies;
     }
 
+    /**
+     * @deprecated Use
+     *             {@link NuxeoServer#doRestletPostCall(List, Map, InputStream, Long)}
+     *             and provide a length.
+     * @param pathParams
+     * @param queryParams
+     * @param istream
+     * @return
+     */
     public Representation doRestletPostCall(List<String> pathParams,
             Map<String, String> queryParams, InputStream istream) {
+        return doRestletPostCall(pathParams, queryParams, istream, null);
+    }
+
+    public Representation doRestletPostCall(List<String> pathParams,
+            Map<String, String> queryParams, InputStream istream, Long size) {
         String path = "";
         StringBuffer pathBuffer = new StringBuffer();
 
@@ -119,11 +133,11 @@ public class NuxeoServer {
             path = pathBuffer.toString();
         }
 
-        return doRestletPostCall(path, queryParams, istream);
+        return doRestletPostCall(path, queryParams, istream, size);
     }
 
     public Representation doRestletPostCall(String subPath,
-            Map<String, String> queryParams, InputStream istream) {
+            Map<String, String> queryParams, InputStream istream, Long size) {
         StringBuffer urlBuffer = new StringBuffer();
 
         if (subPath.startsWith("/")) {
@@ -156,7 +170,7 @@ public class NuxeoServer {
         setupAuth(request);
         setupCookies(request);
         final InputStream in = istream;
-        request.setEntity(new OutputRepresentation(
+        OutputRepresentation representation = new OutputRepresentation(
                 MediaType.MULTIPART_FORM_DATA) {
             @Override
             public void write(OutputStream outputStream) throws IOException {
@@ -167,7 +181,11 @@ public class NuxeoServer {
                 }
 
             }
-        });
+        };
+        request.setEntity(representation);
+        if (size != null) {
+            representation.setSize(size);
+        }
 
         return getRestClient().handle(request).getEntity();
     }
