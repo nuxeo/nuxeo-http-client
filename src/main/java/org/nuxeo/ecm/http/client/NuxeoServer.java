@@ -36,6 +36,7 @@ import org.restlet.data.Method;
 import org.restlet.data.Parameter;
 import org.restlet.data.Protocol;
 import org.restlet.data.Request;
+import org.restlet.data.Response;
 import org.restlet.resource.OutputRepresentation;
 import org.restlet.resource.Representation;
 import org.restlet.util.Series;
@@ -239,7 +240,14 @@ public class NuxeoServer {
         setupAuth(request);
         setupCookies(request);
 
-        return getRestClient().handle(request).getEntity();
+        Response response = getRestClient().handle(request);
+        if (response.getRedirectRef() != null) {
+            request = new Request(Method.GET, response.getRedirectRef());
+            setupAuth(request);
+            setupCookies(request);
+            response = getRestClient().handle(request);
+        }
+        return response.getEntity();
     }
 
     protected void setupAuth(Request request) {
