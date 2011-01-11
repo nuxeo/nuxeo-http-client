@@ -9,12 +9,12 @@
   This is not a Nuxeo addon to add to a Nuxeo server,
   this is rather a Nuxeo client.
   </description>
-  <version>5.4.1-SNAPSHOT</version>
+  <version>5.4.1-I20110111_0116</version>
 
   <parent>
     <groupId>org.nuxeo</groupId>
     <artifactId>nuxeo-ecm</artifactId>
-    <version>5.4.1-SNAPSHOT</version>
+    <version>5.4.1-I20110111_0116</version>
   </parent>
 
   <dependencies>
