@@ -8,11 +8,11 @@
   <parent>
     <groupId>org.nuxeo</groupId>
     <artifactId>nuxeo-ecm</artifactId>
-    <version>5.4.2-SNAPSHOT</version>
+    <version>5.4.3-SNAPSHOT</version>
   </parent>
 
   <artifactId>nuxeo-http-client</artifactId>
-  <version>5.4.2-SNAPSHOT</version>
+  <version>5.4.3-SNAPSHOT</version>
   <name>Nuxeo HTTP client</name>
   <description>Nuxeo HTTP client is a simple helper library
   to encapsulate restlets calls to the Nuxeo platform.
