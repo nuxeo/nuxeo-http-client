@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.nuxeo</groupId>
-    <artifactId>nuxeo-ecm</artifactId>
+    <artifactId>nuxeo-addons-parent</artifactId>
     <version>5.5-SNAPSHOT</version>
   </parent>
 
   <artifactId>nuxeo-http-client</artifactId>
-  <version>5.5-SNAPSHOT</version>
   <name>Nuxeo HTTP client</name>
   <description>Nuxeo HTTP client is a simple helper library
   to encapsulate restlets calls to the Nuxeo platform.
@@ -24,17 +21,14 @@
     <dependency>
       <groupId>org.restlet</groupId>
       <artifactId>org.restlet</artifactId>
-      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>com.noelios.restlet</groupId>
       <artifactId>com.noelios.restlet.ext.httpclient</artifactId>
-      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>com.noelios.restlet</groupId>
       <artifactId>com.noelios.restlet</artifactId>
-      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>dom4j</groupId>
@@ -43,7 +37,6 @@
     <dependency>
       <groupId>jaxen</groupId>
       <artifactId>jaxen</artifactId>
-      <version>1.1.1</version>
     </dependency>
   </dependencies>
 
@@ -60,4 +53,34 @@
       </plugin>
     </plugins>
   </build>
+
+  <repositories>
+    <repository>
+      <id>public</id>
+      <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>public-snapshot</id>
+      <url>http://maven.nuxeo.org/nexus/content/groups/public-snapshot</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <scm>
+    <connection>scm:hg:http://hg.nuxeo.org/addons/nuxeo-http-client</connection>
+    <developerConnection>scm:hg:https://hg.nuxeo.org/addons/nuxeo-http-client</developerConnection>
+    <url>http://hg.nuxeo.org/addons/nuxeo-http-client</url>
+  </scm>
+
 </project>
