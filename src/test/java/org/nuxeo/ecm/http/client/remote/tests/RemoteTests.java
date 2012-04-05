@@ -26,14 +26,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 import org.nuxeo.ecm.http.client.NuxeoServer;
 import org.restlet.data.MediaType;
 import org.restlet.resource.Representation;
 
-public class RemoteTests extends TestCase {
+public class RemoteTests {
 
+    @Test
     public void testSimpleBA() throws IOException {
         NuxeoServer nxServer = new NuxeoServer("http://127.0.0.1:8080/nuxeo");
 
@@ -48,6 +50,7 @@ public class RemoteTests extends TestCase {
         assertEquals(res.getMediaType().getName(), MediaType.TEXT_XML.getName());
     }
 
+    @Test
     public void testSimpleBAWithParams() throws IOException {
         NuxeoServer nxServer = new NuxeoServer("http://127.0.0.1:8080/nuxeo");
 
@@ -96,6 +99,7 @@ public class RemoteTests extends TestCase {
         assertEquals(res.getMediaType().getName(), MediaType.TEXT_XML.getName());
     }
     
+    @Test
     public void testDownloadFileCall() throws Exception {
         NuxeoServer nxServer = new NuxeoServer("http://127.0.0.1:8080/nuxeo");
         nxServer.setRestPrefix("nxfile"); 
