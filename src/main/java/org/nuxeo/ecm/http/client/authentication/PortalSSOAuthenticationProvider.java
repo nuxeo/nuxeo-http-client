@@ -40,22 +40,19 @@ public class PortalSSOAuthenticationProvider {
 
     private static final String USER_HEADER = "NX_USER";
 
-    public static Map<String, String> getHeaders(String secretKey,
-            String userName) {
+    public static Map<String, String> getHeaders(String secretKey, String userName) {
 
         Map<String, String> headers = new HashMap<String, String>();
 
         Date timestamp = new Date();
         int randomData = new Random(timestamp.getTime()).nextInt();
 
-        String clearToken = timestamp.getTime() + TOKEN_SEP + randomData
-                + TOKEN_SEP + secretKey + TOKEN_SEP + userName;
+        String clearToken = timestamp.getTime() + TOKEN_SEP + randomData + TOKEN_SEP + secretKey + TOKEN_SEP + userName;
 
         byte[] hashedToken;
 
         try {
-            hashedToken = MessageDigest.getInstance("MD5").digest(
-                    clearToken.getBytes());
+            hashedToken = MessageDigest.getInstance("MD5").digest(clearToken.getBytes());
         } catch (NoSuchAlgorithmException e) {
             return null;
         }

@@ -75,8 +75,7 @@ public class NuxeoServer {
         this(protocol, serverIP, serverPort, "nuxeo");
     }
 
-    public NuxeoServer(String protocol, String serverIP, String serverPort,
-            String servletPath) {
+    public NuxeoServer(String protocol, String serverIP, String serverPort, String servletPath) {
         StringBuffer sb = new StringBuffer();
         sb.append(protocol);
         sb.append("://");
@@ -96,8 +95,7 @@ public class NuxeoServer {
         this.password = password;
     }
 
-    public void setSharedSecretAuthentication(String userName,
-            String secretToken) {
+    public void setSharedSecretAuthentication(String userName, String secretToken) {
         authType = AUTH_TYPE_SECRET;
         this.userName = userName;
         this.secretToken = secretToken;
@@ -108,21 +106,19 @@ public class NuxeoServer {
     }
 
     /**
-     * @deprecated Use
-     *             {@link NuxeoServer#doRestletPostCall(List, Map, InputStream, Long)}
-     *             and provide a length.
+     * @deprecated Use {@link NuxeoServer#doRestletPostCall(List, Map, InputStream, Long)} and provide a length.
      * @param pathParams
      * @param queryParams
      * @param istream
      * @return
      */
-    public Representation doRestletPostCall(List<String> pathParams,
-            Map<String, String> queryParams, InputStream istream) {
+    public Representation doRestletPostCall(List<String> pathParams, Map<String, String> queryParams,
+            InputStream istream) {
         return doRestletPostCall(pathParams, queryParams, istream, null);
     }
 
-    public Representation doRestletPostCall(List<String> pathParams,
-            Map<String, String> queryParams, InputStream istream, Long size) {
+    public Representation doRestletPostCall(List<String> pathParams, Map<String, String> queryParams,
+            InputStream istream, Long size) {
         String path = "";
         StringBuffer pathBuffer = new StringBuffer();
 
@@ -137,8 +133,8 @@ public class NuxeoServer {
         return doRestletPostCall(path, queryParams, istream, size);
     }
 
-    public Representation doRestletPostCall(String subPath,
-            Map<String, String> queryParams, InputStream istream, Long size) {
+    public Representation doRestletPostCall(String subPath, Map<String, String> queryParams, InputStream istream,
+            Long size) {
         StringBuffer urlBuffer = new StringBuffer();
 
         if (subPath.startsWith("/")) {
@@ -171,8 +167,7 @@ public class NuxeoServer {
         setupAuth(request);
         setupCookies(request);
         final InputStream in = istream;
-        OutputRepresentation representation = new OutputRepresentation(
-                MediaType.MULTIPART_FORM_DATA) {
+        OutputRepresentation representation = new OutputRepresentation(MediaType.MULTIPART_FORM_DATA) {
             @Override
             public void write(OutputStream outputStream) throws IOException {
                 byte[] buffer = new byte[1024 * 64];
@@ -191,8 +186,7 @@ public class NuxeoServer {
         return getRestClient().handle(request).getEntity();
     }
 
-    public Representation doRestletGetCall(List<String> pathParams,
-            Map<String, String> queryParams) {
+    public Representation doRestletGetCall(List<String> pathParams, Map<String, String> queryParams) {
         String path = "";
         StringBuffer pathBuffer = new StringBuffer();
 
@@ -207,8 +201,7 @@ public class NuxeoServer {
         return doRestletGetCall(path, queryParams);
     }
 
-    public Representation doRestletGetCall(String subPath,
-            Map<String, String> queryParams) {
+    public Representation doRestletGetCall(String subPath, Map<String, String> queryParams) {
         StringBuffer urlBuffer = new StringBuffer();
 
         if (subPath.startsWith("/")) {
@@ -254,22 +247,19 @@ public class NuxeoServer {
 
         if (authType == AUTH_TYPE_BASIC) {
             ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
-            ChallengeResponse authentication = new ChallengeResponse(scheme,
-                    userName, password);
+            ChallengeResponse authentication = new ChallengeResponse(scheme, userName, password);
             request.setChallengeResponse(authentication);
 
         } else if (authType == AUTH_TYPE_SECRET) {
             Series<Parameter> additionnalHeaders = new Form();
 
-            Map<String, String> securityHeaders = PortalSSOAuthenticationProvider.getHeaders(
-                    secretToken, userName);
+            Map<String, String> securityHeaders = PortalSSOAuthenticationProvider.getHeaders(secretToken, userName);
 
             for (String hn : securityHeaders.keySet()) {
                 additionnalHeaders.add(hn, securityHeaders.get(hn));
             }
 
-            request.getAttributes().put("org.restlet.http.headers",
-                    additionnalHeaders);
+            request.getAttributes().put("org.restlet.http.headers", additionnalHeaders);
         }
     }
 

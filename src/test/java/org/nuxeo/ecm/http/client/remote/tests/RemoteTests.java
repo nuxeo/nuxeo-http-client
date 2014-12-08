@@ -57,8 +57,7 @@ public class RemoteTests {
         nxServer.setAuthType(NuxeoServer.AUTH_TYPE_BASIC);
         nxServer.setBasicAuthentication("Administrator", "Administrator");
 
-        List<String> pathParams = Arrays.asList("execQueryModel",
-                "USER_DOCUMENTS");
+        List<String> pathParams = Arrays.asList("execQueryModel", "USER_DOCUMENTS");
 
         Map<String, String> queryParams = new HashMap<String, String>();
 
@@ -79,11 +78,9 @@ public class RemoteTests {
         NuxeoServer nxServer = new NuxeoServer("http://127.0.0.1:8080/nuxeo");
 
         nxServer.setAuthType(NuxeoServer.AUTH_TYPE_SECRET);
-        nxServer.setSharedSecretAuthentication("Administrator",
-                "nuxeo5secretkey");
+        nxServer.setSharedSecretAuthentication("Administrator", "nuxeo5secretkey");
 
-        List<String> pathParams = Arrays.asList("execQueryModel",
-                "USER_DOCUMENTS");
+        List<String> pathParams = Arrays.asList("execQueryModel", "USER_DOCUMENTS");
 
         Map<String, String> queryParams = new HashMap<String, String>();
 
@@ -98,17 +95,17 @@ public class RemoteTests {
         System.out.println(res.getText());
         assertEquals(res.getMediaType().getName(), MediaType.TEXT_XML.getName());
     }
-    
+
     @Test
     public void testDownloadFileCall() throws Exception {
         NuxeoServer nxServer = new NuxeoServer("http://127.0.0.1:8080/nuxeo");
-        nxServer.setRestPrefix("nxfile"); 
+        nxServer.setRestPrefix("nxfile");
 
         nxServer.setAuthType(NuxeoServer.AUTH_TYPE_BASIC);
         nxServer.setBasicAuthentication("Administrator", "Administrator");
 
-        List<String> pathParams = Arrays.asList("default",
-                "94830dca-22f3-4a22-9c61-fdf13eefc01c", "file:content", "singles_large.jpg"); 
+        List<String> pathParams = Arrays.asList("default", "94830dca-22f3-4a22-9c61-fdf13eefc01c", "file:content",
+                "singles_large.jpg");
 
         Representation res = nxServer.doRestletGetCall(pathParams, null);
 
@@ -121,13 +118,12 @@ public class RemoteTests {
         nxServer.setAuthType(NuxeoServer.AUTH_TYPE_BASIC);
         nxServer.setBasicAuthentication("Administrator", "Administrator");
 
-        List<String> pathParams = Arrays.asList("default",
-                "9473fa94-4b34-43e3-ab3b-1a2c005d3c0e", "downloadFile");
+        List<String> pathParams = Arrays.asList("default", "9473fa94-4b34-43e3-ab3b-1a2c005d3c0e", "downloadFile");
 
         Representation res = nxServer.doRestletGetCall(pathParams, null);
         InputStream inputStream = res.getStream();
 
         assertEquals(res.getSize(), 123);
     }
-    
+
 }
