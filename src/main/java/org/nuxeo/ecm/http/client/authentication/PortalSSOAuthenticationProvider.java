@@ -42,12 +42,14 @@ public class PortalSSOAuthenticationProvider {
 
     private static final String USER_HEADER = "NX_USER";
 
+    protected static final Random RANDOM = new Random();
+
     public static Map<String, String> getHeaders(String secretKey, String userName) {
 
         Map<String, String> headers = new HashMap<String, String>();
 
         Date timestamp = new Date();
-        int randomData = new Random(timestamp.getTime()).nextInt();
+        int randomData = RANDOM.nextInt();
 
         String clearToken = timestamp.getTime() + TOKEN_SEP + randomData + TOKEN_SEP + secretKey + TOKEN_SEP + userName;
 
