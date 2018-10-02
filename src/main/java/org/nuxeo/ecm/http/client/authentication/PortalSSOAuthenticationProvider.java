@@ -23,6 +23,7 @@ package org.nuxeo.ecm.http.client.authentication;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class PortalSSOAuthenticationProvider {
 
     private static final String USER_HEADER = "NX_USER";
 
-    protected static final Random RANDOM = new Random();
+    protected static final Random RANDOM = new SecureRandom();
 
     public static Map<String, String> getHeaders(String secretKey, String userName) {
 
