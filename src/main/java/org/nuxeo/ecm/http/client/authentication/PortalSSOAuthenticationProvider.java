@@ -24,12 +24,11 @@ package org.nuxeo.ecm.http.client.authentication;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
-import com.noelios.restlet.util.Base64;
 
 public class PortalSSOAuthenticationProvider {
 
@@ -62,7 +61,7 @@ public class PortalSSOAuthenticationProvider {
             return null;
         }
 
-        String base64HashedToken = Base64.encodeBytes(hashedToken);
+        String base64HashedToken = Base64.getEncoder().encodeToString(hashedToken);
 
         headers.put(TS_HEADER, String.valueOf(timestamp.getTime()));
         headers.put(RANDOM_HEADER, String.valueOf(randomData));
