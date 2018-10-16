@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
 
 import org.nuxeo.ecm.http.client.NuxeoServer;
 import org.restlet.data.MediaType;
-import org.restlet.resource.Representation;
+import org.restlet.representation.Representation;
 
 public class RemoteTests {
 
