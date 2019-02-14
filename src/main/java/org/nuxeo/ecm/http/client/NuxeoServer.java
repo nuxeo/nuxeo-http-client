@@ -78,7 +78,7 @@ public class NuxeoServer {
     }
 
     public NuxeoServer(String protocol, String serverIP, String serverPort, String servletPath) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(protocol);
         sb.append("://");
         sb.append(serverIP);
@@ -122,7 +122,7 @@ public class NuxeoServer {
     public Representation doRestletPostCall(List<String> pathParams, Map<String, String> queryParams,
             InputStream istream, Long size) {
         String path = "";
-        StringBuffer pathBuffer = new StringBuffer();
+        StringBuilder pathBuffer = new StringBuilder();
 
         if (pathParams != null) {
             for (String p : pathParams) {
@@ -137,7 +137,7 @@ public class NuxeoServer {
 
     public Representation doRestletPostCall(String subPath, Map<String, String> queryParams, InputStream istream,
             Long size) {
-        StringBuffer urlBuffer = new StringBuffer();
+        StringBuilder urlBuffer = new StringBuilder();
 
         if (subPath.startsWith("/")) {
             subPath = subPath.substring(1);
@@ -190,7 +190,7 @@ public class NuxeoServer {
 
     public Representation doRestletGetCall(List<String> pathParams, Map<String, String> queryParams) {
         String path = "";
-        StringBuffer pathBuffer = new StringBuffer();
+        StringBuilder pathBuffer = new StringBuilder();
 
         if (pathParams != null) {
             for (String p : pathParams) {
@@ -204,7 +204,7 @@ public class NuxeoServer {
     }
 
     public Representation doRestletGetCall(String subPath, Map<String, String> queryParams) {
-        StringBuffer urlBuffer = new StringBuffer();
+        StringBuilder urlBuffer = new StringBuilder();
 
         if (subPath.startsWith("/")) {
             subPath = subPath.substring(1);
